@@ -6,7 +6,9 @@
 *.lo
 *.o
 *.obj
+# Other shit
 forme.md
+notes.md
 # Precompiled Headers
 *.gch
 *.pch
