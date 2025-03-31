@@ -1,5 +1,9 @@
-#include <linux /if.h>
+#include <linux/if.h>
 #include <linux/if_tun.h>
+#include <fcntl.h>
+#include <cstring> // For memset
+#include <sys/ioctl.h> // For ioctl
+#include <unistd.h>    // For close
 
 int tun_alloc(char *dev, int flags) {
 
