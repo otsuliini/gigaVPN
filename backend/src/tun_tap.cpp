@@ -4,12 +4,12 @@
 #include <cstring> // For memset
 #include <sys/ioctl.h> // For ioctl
 #include <unistd.h>    // For close
-
+#include <cstdio>
 int tun_alloc(char *dev, int flags) {
 
   struct ifreq ifr;
   int fd, err;
-  char *clonedev = "/dev/net/tun";
+  const char *clonedev = "/dev/net/tun";
 
   /* Arguments taken by the function:
    *
@@ -50,4 +50,18 @@ int tun_alloc(char *dev, int flags) {
   /* this is the special file descriptor that the caller will use to talk
    * with the virtual interface */
   return fd;
+}
+
+int main() {
+    char tun_name[IFNAMSIZ];
+    tun_name[0] = '\0';  // Let the kernel assign a name
+    
+    int tun_fd = tun_alloc(tun_name, IFF_TUN | IFF_NO_PI);
+    if (tun_fd < 0) {
+        return 1;
+    }
+    
+    printf("TUN device created: %s\n", tun_name);
+    close(tun_fd);
+    return 0;
 }
